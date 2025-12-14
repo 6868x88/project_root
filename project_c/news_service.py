@@ -5,7 +5,7 @@ from newspaper import Article
 # from summa.summarizer import summarize
 
 
-# 뉴스 수집(뉴스 원문 크롤링)
+# 뉴스 수집(뉴스 원문 크롤링) 
 def crawl_article(url: str):
     article = Article(url, language='ko')
     article.download()
