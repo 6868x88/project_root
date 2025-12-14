@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "FastAPI Auto Run",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "Untitled-1:app",
+                "--reload"
+            ],
+            "postDebugTask": "open-browser",
+            "jinja": true
+        }
+    ]
+}
