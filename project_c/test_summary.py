@@ -7,7 +7,11 @@ import feedparser
 import requests
 import re
 from newspaper import Article
-from summa.summarizer import summarize
+# from summa.summarizer import summarize
+from send_to_spring import send_news_to_spring
+from datetime import datetime
+
+
 
 
 
@@ -99,6 +103,21 @@ def main():
 
         print("제목:", article["title"])
         print("요약:", summary)
+    
+    article = crawl_article(entry.link)
+    summary = summarize_txt(article["text"])
+    news_data = {
+        "title": article["title"],
+        "summary": summary,
+        "url": entry.link,
+        "source": "SBS",
+        "publishedAt": datetime.now().isoformat()
+        }
+    send_news_to_spring(news_data)
+
+
+
+
 
 if __name__ == "__main__":
     main()
