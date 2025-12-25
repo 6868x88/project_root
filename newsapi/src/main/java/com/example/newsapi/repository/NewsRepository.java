@@ -5,4 +5,6 @@ import com.example.newsapi.domain.News;
 
 public interface NewsRepository extends JpaRepository<News, Long> {
 	boolean existsByUrl(String url);
+	
+	
 }

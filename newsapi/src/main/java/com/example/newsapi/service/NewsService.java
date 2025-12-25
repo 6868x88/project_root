@@ -3,6 +3,10 @@ package com.example.newsapi.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.newsapi.domain.News;
@@ -47,5 +51,21 @@ public class NewsService {
 						news.getPublishedAt()
 						))
 				.collect(Collectors.toList());
+	}
+	
+	
+	public Page<NewsResponse> getNewsPage(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("publishedAt").descending());
+	
+		 return newsRepository
+			        .findAll(pageable)
+			        .map(news -> new NewsResponse(
+			            news.getId(),
+			            news.getTitle(),
+			            news.getSummary(),
+			            news.getUrl(),
+			            news.getSource(),
+			            news.getPublishedAt()
+			        ));
 	}
 }
