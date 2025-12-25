@@ -47,5 +47,16 @@ public class NewsController {
 	}
 
 	
+	@GetMapping("/recommend")
+	public ResponseEntity<Page<NewsResponse>> recommend(
+	        @RequestParam Long userId,
+	        @RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "10") int size
+	) {
+	    return ResponseEntity.ok(
+	        newsService.getRecommendedNews(userId, page, size)
+	    );
+	}
+
 	
 }
