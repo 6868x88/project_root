@@ -75,3 +75,16 @@ def summarize_text(text: str):
 
     # 정상 요약
     return limit_summary(sentences)
+
+# 영상 기사 스킵
+def is_invalid_article(text: str) -> bool:
+    if not text:
+        return True
+
+    if "video 태그를 지원하지 않습니다" in text:
+        return True
+
+    if len(text.strip()) < 100:
+        return True
+
+    return False

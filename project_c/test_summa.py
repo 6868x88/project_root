@@ -15,3 +15,4 @@ summary = summarize(text, ratio=0.3)
 
 print("\n요약 결과:")
 print(summary)
+
