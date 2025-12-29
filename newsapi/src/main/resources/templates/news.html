@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: content">
+<body>
+<article>
+  <h2 th:text="${news.title}"></h2>
+  <p th:text="${news.summary}"></p>
+
+  <a th:href="${news.url}" target="_blank">
+    원문 보기
+  </a>
+</article>
+</body>
+</html>

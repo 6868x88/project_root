@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>News Recommender</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header>
+  <h2><a href="/">News Recommender</a></h2>
+
+  <div>
+    <a th:if="${user == null}" href="/login">Login</a>
+    <span th:if="${user != null}" th:text="${user.email}"></span>
+    <a th:if="${user != null}" href="/recommend">Recommend</a>
+  </div>
+</header>
+
+<main>
+  <div th:replace="~{::content}"></div>
+</main>
+</body>
+</html>
