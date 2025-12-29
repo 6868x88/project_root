@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="layout :: content">
-<body>
-<section>
+      th:replace="layout">
+
+<div th:fragment="content">
+
   <h3>Latest News</h3>
 
   <ul>
@@ -11,9 +12,8 @@
         <h4 th:text="${news.title}"></h4>
       </a>
       <p th:text="${news.summary}"></p>
-      <small th:text="${news.source}"></small>
     </li>
   </ul>
-</section>
-</body>
+
+</div>
 </html>

@@ -69,4 +69,7 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 			@Param("userId") Long userId,
 			@Param("limit") int limit
 			);
+	
+
+    List<News> findTop10ByOrderByPublishedAtDesc();
 }

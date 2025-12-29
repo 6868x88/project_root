@@ -22,7 +22,7 @@ public class NewsService {
 	private UserInterestRepository userInterestRepository;
 
 	public NewsService(
-			 NewsRepository newsRepository
+			NewsRepository newsRepository
 			,UserInterestRepository userInterestRepository) {
 		this.newsRepository = newsRepository;
 		this.userInterestRepository = userInterestRepository;
@@ -58,54 +58,64 @@ public class NewsService {
 						))
 				.collect(Collectors.toList());
 	}
-	
-	
-	public Page<NewsResponse> getNewsPage(int page, int size) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by("publishedAt").descending());
-	
-		 return newsRepository
-			        .findAll(pageable)
-			        .map(news -> new NewsResponse(
-			            news.getId(),
-			            news.getTitle(),
-			            news.getSummary(),
-			            news.getUrl(),
-			            news.getSource(),
-			            news.getPublishedAt()
-			        ));
-	}
-//	
-	public Page<NewsResponse> getRecommendedNews(
-	        Long userId,
-	        int page,
-	        int size
-	) {
-	    List<UserInterest> interests =
-	        userInterestRepository.findByUserId(userId);
 
-	    if (interests.isEmpty()) {
-	        return getNewsPage(page, size); // fallback
-	    }
-
-	    Pageable pageable = PageRequest.of(
-	        page, size, Sort.by("publishedAt").descending()
-	    );
-
-	    // 일단 첫 관심사 기준 (단순 & 명확)
-	    String keyword = interests.get(0).getKeyword();
-
-	    return newsRepository
-	        .findByTitleContainingOrSummaryContaining(
-	            keyword, keyword, pageable
-	        )
-	        .map(news -> new NewsResponse(
-	            news.getId(),
-	            news.getTitle(),
-	            news.getSummary(),
-	            news.getUrl(),
-	            news.getSource(),
-	            news.getPublishedAt()
-	        ));
+	public List<News> getLatestNews(int limit) {
+		return newsRepository.findTop10ByOrderByPublishedAtDesc();
 	}
 
-}
+	public News getNewsById(Long id) {
+		return newsRepository.findById(id)
+				.orElseThrow(() ->
+				new IllegalArgumentException("News not found: " + id)
+						);
+	}
+
+		public Page<NewsResponse> getNewsPage(int page, int size) {
+			Pageable pageable = PageRequest.of(page, size, Sort.by("publishedAt").descending());
+
+			return newsRepository
+					.findAll(pageable)
+					.map(news -> new NewsResponse(
+							news.getId(),
+							news.getTitle(),
+							news.getSummary(),
+							news.getUrl(),
+							news.getSource(),
+							news.getPublishedAt()
+							));
+		}
+		//	
+		public Page<NewsResponse> getRecommendedNews(
+				Long userId,
+				int page,
+				int size
+				) {
+			List<UserInterest> interests =
+					userInterestRepository.findByUserId(userId);
+
+			if (interests.isEmpty()) {
+				return getNewsPage(page, size); // fallback
+			}
+
+			Pageable pageable = PageRequest.of(
+					page, size, Sort.by("publishedAt").descending()
+					);
+
+			// 일단 첫 관심사 기준 (단순 & 명확)
+			String keyword = interests.get(0).getKeyword();
+
+			return newsRepository
+					.findByTitleContainingOrSummaryContaining(
+							keyword, keyword, pageable
+							)
+					.map(news -> new NewsResponse(
+							news.getId(),
+							news.getTitle(),
+							news.getSummary(),
+							news.getUrl(),
+							news.getSource(),
+							news.getPublishedAt()
+							));
+		}
+
+	}

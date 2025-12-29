@@ -6,9 +6,9 @@
   <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
+
 <header>
   <h2><a href="/">News Recommender</a></h2>
-
   <div>
     <a th:if="${user == null}" href="/login">Login</a>
     <span th:if="${user != null}" th:text="${user.email}"></span>
@@ -17,7 +17,9 @@
 </header>
 
 <main>
+  <!-- ⭐ 여기로 페이지 내용이 들어온다 -->
   <div th:replace="~{::content}"></div>
 </main>
+
 </body>
 </html>

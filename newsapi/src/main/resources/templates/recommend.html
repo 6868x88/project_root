@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="layout :: content">
-<body>
-<h3>Recommended for you</h3>
+      th:replace="layout">
+      
+<div th:fragment="content">
 
-<ul>
-  <li th:each="news : ${recommendations}">
-    <a th:href="@{/news/{id}(id=${news.id})}">
-      <h4 th:text="${news.title}"></h4>
-    </a>
-    <p th:text="${news.summary}"></p>
-    <small th:text="'score: ' + ${news.totalScore}"></small>
-  </li>
-</ul>
-</body>
+  <h3>Recommended for you</h3>
+
+  <ul>
+    <li th:each="news : ${recommendations}">
+      <a th:href="@{/news/{id}(id=${news.id})}">
+        <h4 th:text="${news.title}"></h4>
+      </a>
+      <p th:text="${news.summary}"></p>
+      <small th:text="'score: ' + ${news.totalScore}"></small>
+    </li>
+  </ul>
+
+</div>
 </html>
