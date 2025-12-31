@@ -7,6 +7,7 @@ public class NewsCreateRequest {
 	private String summary;
 	private String url;
 	private String source;
+	private String imageUrl;
 	private LocalDateTime publishedAt;
 
 	//기본 생성자
@@ -26,6 +27,10 @@ public class NewsCreateRequest {
 
 	public String getSource() {
 		return source;
+	}
+
+	public String getImageUrl() {
+	    return imageUrl;
 	}
 
 	public LocalDateTime getPublishedAt() {

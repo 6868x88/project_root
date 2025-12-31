@@ -35,7 +35,7 @@ public class LoginController {
 
         session.setAttribute("user", user);
 
-        // ✅ 핵심
+        
         return "redirect:/";
     }
 }

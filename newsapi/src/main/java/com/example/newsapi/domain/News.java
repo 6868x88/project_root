@@ -25,16 +25,25 @@ public class News {
 
     private LocalDateTime publishedAt;
     private LocalDateTime createdAt;
+    
+    @Column(name = "image_url", length = 500)
+    private String imageUrl;
 
     // JPA 기본 생성자 (필수)
     protected News() {}
 
     // 필수 필드 생성자
-    public News(String title, String summary, String url, String source, LocalDateTime publishedAt) {
+    public News(String title,
+    	    String summary,
+    	    String url,
+    	    String source,
+    	    String imageUrl,
+    	    LocalDateTime publishedAt) {
         this.title = title;
         this.summary = summary;
         this.url = url;
         this.source = source;
+        this.imageUrl = imageUrl;
         this.publishedAt = publishedAt;
         this.createdAt = LocalDateTime.now();
     }
@@ -45,6 +54,7 @@ public class News {
     public String getSummary() { return summary; }
     public String getUrl() { return url; }
     public String getSource() { return source; }
+    public String getImageUrl() { return imageUrl;}
     public LocalDateTime getPublishedAt() { return publishedAt; }
     public LocalDateTime getCreatedAt() { return createdAt; }
 }

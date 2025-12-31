@@ -14,6 +14,19 @@ def crawl_article(url: str):
         "title" : article.title,
         "text" : article.text
         }
+    
+# 기사 대표 이미지 추출
+def extract_image_url(soup):
+    og = soup.select_one("meta[property='og:image']")
+    if og and og.get("content"):
+        return og["content"].strip()
+
+    img = soup.select_one("article img")
+    if img and img.get("src"):
+        return img["src"].strip()
+
+    return None
+  
 
 # 사진/캡션 제거
 def clean_text(text: str):

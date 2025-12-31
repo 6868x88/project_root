@@ -1,7 +1,11 @@
 import feedparser
-from news_service import crawl_article, summarize_text, is_invalid_article
+import requests
+from bs4 import BeautifulSoup
+
+from news_service import crawl_article, summarize_text, is_invalid_article, extract_image_url
 from send_to_spring import send_news_to_spring
 from datetime import datetime
+
 
 
 RSS_URL = "https://www.yonhapnewstv.co.kr/browse/feed/"
@@ -19,6 +23,11 @@ def collect_news():
             article = crawl_article(url)
             summary = summarize_text(article["text"])
             
+            html = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}).text
+            soup = BeautifulSoup(html, "html.parser")
+            image_url = extract_image_url(soup)
+
+            
             if is_invalid_article(article["text"]):
                 print("영상/비정상 기사 스킵:", url)
                 continue
@@ -27,7 +36,8 @@ def collect_news():
                 "title": article["title"],
                 "url": url,
                 "content": article["text"],
-                "summary": summary
+                "summary": summary,
+                "imageUrl": image_url
             }
 
             news_list.append(news)
