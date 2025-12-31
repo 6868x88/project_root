@@ -66,7 +66,7 @@ public class NewsService {
 	}
 
 	public List<News> getLatestNews(int limit) {
-		return newsRepository.findTop10ByOrderByPublishedAtDesc();
+		return newsRepository.findTop10ByOrderByCreatedAtDesc();
 	}
 
 	public News getNewsById(Long id) {
@@ -77,7 +77,7 @@ public class NewsService {
 	}
 
 	public Page<NewsResponse> getNewsPage(int page, int size) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by("publishedAt").descending());
+		Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
 
 		return newsRepository
 				.findAll(pageable)
@@ -91,7 +91,7 @@ public class NewsService {
 						news.getPublishedAt()
 						));
 	}
-	//	
+
 	public Page<NewsResponse> getRecommendedNews(
 			Long userId,
 			int page,
@@ -105,7 +105,7 @@ public class NewsService {
 		}
 
 		Pageable pageable = PageRequest.of(
-				page, size, Sort.by("publishedAt").descending()
+				page, size, Sort.by("createdAt").descending()
 				);
 
 		// 일단 첫 관심사 기준 (단순 & 명확)
