@@ -1,18 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="layout">
-      
+<html xmlns:th="http://www.thymeleaf.org">
+
 <div th:fragment="content">
 
-  <h3>Recommended for you</h3>
+  <h3>개인 추천 기사</h3>
 
-  <ul>
-    <li th:each="news : ${recommendations}">
-      <a th:href="@{/news/{id}(id=${news.id})}">
-        <h4 th:text="${news.title}"></h4>
-      </a>
-      <p th:text="${news.summary}"></p>
-      <small th:text="'score: ' + ${news.totalScore}"></small>
+  <ul class="news-grid">
+    <li class="news-card" th:each="news : ${recommendations}"
+     th:onclick="|location.href='/news/${news.id}'|">
+
+      <div class="news-image">
+        <img th:if="${news.imageUrl != null}"
+             th:src="${news.imageUrl}"
+             alt="기사 이미지"/>
+
+        <div th:if="${news.imageUrl == null}" class="image-placeholder">
+          이미지 없음
+        </div>
+      </div>
+
+      <div class="news-content">
+        <h4 th:text="${news.title}">제목</h4>
+        <p th:text="${news.summary}">요약</p>
+        <small th:text="'score: ' + ${news.totalScore}"></small>
+      </div>
+
     </li>
   </ul>
 

@@ -5,18 +5,23 @@
 	<div th:fragment="content">
 		<article>
 			<h2 th:text="${news.title}"></h2>
-			<div class="news-image">
-				<img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}"
-					alt="기사 이미지" />
+			<div>
+				<div>
+					<img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}"
+						alt="기사 이미지" />
 
-				<div th:if="${news.imageUrl == null}" class="image-placeholder">
-					이미지 없음</div>
+					<div th:if="${news.imageUrl == null}" class="image-placeholder">
+						이미지 없음</div>
+				</div>
 			</div>
 
-			<p th:text="${news.summary}"></p>
+			<div>
+				<div class="news-source" th:text="${news.source}">연합뉴스TV</div>
+				<div class="news-summary" th:text="${news.summary}">요약</div>
+			</div>
 
-			<a th:href="${news.url}" target="_blank"> 원문 보기 </a>
-			<a href="/" class="back-link">목록으로</a>
+			<a th:href="${news.url}" target="_blank"> 원문 보기 </a> <a href="/"
+				class="back-link">목록으로</a>
 		</article>
 	</div>
 </body>

@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="layout">
+<body>
 
 <div th:fragment="content">
 
-	<h3>Latest News</h3>
-	<ul>
-		<li th:each="news : ${newsList}">
-		<a th:href="@{/news/{id}(id=${news.id})}">
-				<h4 th:text="${news.title}"></h4>
-		</a>
-			<p th:text="${news.summary}"></p></li>
-	</ul>
+  <h3>최신 뉴스</h3>
+
+  <ul class="news-grid">
+    <li class="news-card" th:each="news : ${newsList}">
+      <a th:href="@{/news/{id}(id=${news.id})}" class="news-link">
+
+        <div class="news-image">
+          <img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}">
+        </div>
+
+        <div class="news-content">
+          <h4 th:text="${news.title}"></h4>
+          <p class="news-summary" th:text="${news.summary}"></p>
+        </div>
+
+      </a>
+    </li>
+  </ul>
 
 </div>
+
+</body>
 </html>
