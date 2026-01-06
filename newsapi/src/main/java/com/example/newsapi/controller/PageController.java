@@ -32,17 +32,32 @@ public class PageController {
     }
     
     
-	@GetMapping("/")
-	public String index(Model model, HttpSession session) {
-		model.addAttribute("newsList", newsService.getLatestNews(10));
+    @GetMapping("/")
+    public String index(Model model, HttpSession session) {
 
-		model.addAttribute(
-				"user",
-				session.getAttribute("user")
-				);
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("user", user);
 
-		return "index";
-	}
+        if (user == null) {
+            model.addAttribute(
+                "newsList",
+                newsService.getLatestNews(6)
+            );
+        } else {
+        	 model.addAttribute(
+        	            "newsList",
+        	            newsService.getLatestNews(4)
+        	        );
+        	 
+        	 model.addAttribute(
+        	            "favoriteNews",
+        	            newsService.getTopPreferredNews(user.getId(), 2)
+        	        );
+        }
+
+        return "index";
+    }
+
 	
 	@GetMapping("/recommend")
 	public String recommend(Model model, HttpSession session) {

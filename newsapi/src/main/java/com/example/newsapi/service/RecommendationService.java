@@ -15,6 +15,7 @@ public class RecommendationService {
 
     public RecommendationService(NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
+        
     }
 
     public List<RecommendationNewsDto> recommend(Long userId, int limit) {

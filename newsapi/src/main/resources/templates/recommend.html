@@ -3,30 +3,27 @@
 
 <div th:fragment="content">
 
-  <h3>개인 추천 기사</h3>
+	<h3>개인 추천 기사</h3>
 
-  <ul class="news-grid">
-    <li class="news-card" th:each="news : ${recommendations}"
-     th:onclick="|location.href='/news/${news.id}'|">
+	<ul class="news-grid">
+		<li class="news-card" th:each="news : ${recommendations}"
+			th:onclick="|location.href='/news/${news.id}'|">
 
-      <div class="news-image">
-        <img th:if="${news.imageUrl != null}"
-             th:src="${news.imageUrl}"
-             alt="기사 이미지"/>
+			<div class="news-image">
+				<img
+					th:src="${(news.imageUrl != null and !#strings.isEmpty(news.imageUrl)) ? news.imageUrl : '/images/default.png'}"
+					th:onerror="|this.src='@{/images/default.png}';|" alt="news image" />
+			</div>
 
-        <div th:if="${news.imageUrl == null}" class="image-placeholder">
-          이미지 없음
-        </div>
-      </div>
 
-      <div class="news-content">
-        <h4 th:text="${news.title}">제목</h4>
-        <p th:text="${news.summary}">요약</p>
-        <small th:text="'score: ' + ${news.totalScore}"></small>
-      </div>
+			<div class="news-content">
+				<h4 th:text="${news.title}">제목</h4>
+				<p th:text="${news.summary}">요약</p>
+				<small th:text="'score: ' + ${news.totalScore}"></small>
+			</div>
 
-    </li>
-  </ul>
+		</li>
+	</ul>
 
 </div>
 </html>

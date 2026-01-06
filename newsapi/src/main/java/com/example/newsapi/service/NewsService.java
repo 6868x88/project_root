@@ -14,6 +14,7 @@ import com.example.newsapi.dto.NewsCreateRequest;
 import com.example.newsapi.dto.NewsResponse;
 import com.example.newsapi.entity.UserInterest;
 import com.example.newsapi.repository.NewsRepository;
+import com.example.newsapi.repository.RecommendedNewsId;
 import com.example.newsapi.repository.UserInterestRepository;
 
 
@@ -69,6 +70,7 @@ public class NewsService {
 		return newsRepository.findTop10ByOrderByCreatedAtDesc();
 	}
 
+
 	public News getNewsById(Long id) {
 		return newsRepository.findById(id)
 				.orElseThrow(() ->
@@ -91,6 +93,19 @@ public class NewsService {
 						news.getPublishedAt()
 						));
 	}
+	
+	public List<News> getTopPreferredNews(Long userId, int limit) {
+
+	    List<Long> ids =
+	        newsRepository.findTopPreferredNewsIds(userId, limit)
+	            .stream()
+	            .map(RecommendedNewsId::getId)
+	            .collect(Collectors.toList());
+
+	    return ids.stream()
+	              .map(this::getNewsById)
+	              .collect(Collectors.toList());
+	}
 
 	public Page<NewsResponse> getRecommendedNews(
 			Long userId,
@@ -108,7 +123,7 @@ public class NewsService {
 				page, size, Sort.by("createdAt").descending()
 				);
 
-		// 일단 첫 관심사 기준 (단순 & 명확)
+	
 		String keyword = interests.get(0).getKeyword();
 
 		return newsRepository

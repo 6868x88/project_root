@@ -1,25 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>(로고)</title>
-  <link rel="stylesheet" th:href="@{/style.css}">
+<meta charset="UTF-8">
+<title>(로고)</title>
+<link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<header>
-  <h2><a href="/">(로고)</a></h2>
-  <div>
-    <a th:if="${user == null}" href="/login">Login</a>
-    <span th:if="${user != null}" th:text="${user.email}"></span>
-    <a th:if="${user != null}" href="/recommend">Recommend</a>
-  </div>
-</header>
+	<header class="site-header">
+		<div class="header-inner">
 
-<main>
-  <div th:replace="~{::content}"></div>
-</main>
+			<h2 class="logo">
+				<a href="/">news</a>
+			</h2>
 
+			<div class="header-right">
+				<a th:if="${user == null}" href="javascript:void(0)"
+					onclick="openLoginModal()">Login</a> <span th:if="${user != null}"
+					class="user-email" th:text="${user.email}"> </span> <a
+					th:if="${user != null}" href="/recommend">Recommend</a> <a
+					th:if="${user != null}" href="/logout">Logout</a>
+
+			</div>
+
+		</div>
+	</header>
+
+	<main class="container">
+		<div th:replace="~{::content}"></div>
+	</main>
+
+
+	<div class="pagination">
+		<a href="?page=0" class="page active">1</a> <a href="?page=1"
+			class="page">2</a> <a href="?page=2" class="page">3</a> <span
+			class="ellipsis">▶</span>
+	</div>
+
+	
+	<div id="loginModal" class="modal hidden">
+		<div class="modal-overlay" onclick="closeLoginModal()"></div>
+
+		<div class="modal-content">
+			<button class="modal-close" onclick="closeLoginModal()">×</button>
+			<div th:replace="login :: content"></div>
+		</div>
+	</div>
 </body>
+
+<script>
+  function openLoginModal() {
+    document.getElementById("loginModal").classList.remove("hidden");
+  }
+
+  function closeLoginModal() {
+    document.getElementById("loginModal").classList.add("hidden");
+  }
+</script>
 
 </html>

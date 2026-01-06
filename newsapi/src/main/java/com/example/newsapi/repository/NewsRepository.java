@@ -69,7 +69,70 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 			@Param("userId") Long userId,
 			@Param("limit") int limit
 			);
-	
 
-    List<News> findTop10ByOrderByCreatedAtDesc();
+
+
+	@Query(
+			value = """
+					SELECT n.id AS id
+					FROM news n
+					LEFT JOIN user_interest ui
+					ON ui.user_id = :userId
+					LEFT JOIN user_actions ua
+					ON ua.user_id = :userId
+					AND ua.news_id = n.id
+					GROUP BY n.id
+					HAVING
+					(
+					COALESCE(SUM(
+					CASE
+					WHEN n.title   LIKE CONCAT('%', ui.keyword, '%') THEN 3
+					WHEN n.summary LIKE CONCAT('%', ui.keyword, '%') THEN 2
+					ELSE 0
+					END
+					), 0)
+					+
+					COALESCE(SUM(
+					CASE
+					WHEN ua.action_type = 'CLICK' THEN 1
+					WHEN ua.action_type = 'LIKE'  THEN 3
+					END
+					), 0)
+					+
+					CASE
+					WHEN MAX(n.created_at) >= NOW() - INTERVAL 1 DAY THEN 2
+					ELSE 0
+					END
+					) > 0
+					ORDER BY
+					(
+					COALESCE(SUM(
+					CASE
+					WHEN n.title   LIKE CONCAT('%', ui.keyword, '%') THEN 3
+					WHEN n.summary LIKE CONCAT('%', ui.keyword, '%') THEN 2
+					ELSE 0
+					END
+					), 0)
+					+
+					COALESCE(SUM(
+					CASE
+					WHEN ua.action_type = 'CLICK' THEN 1
+					WHEN ua.action_type = 'LIKE'  THEN 3
+					END
+					), 0)
+					+
+					CASE
+					WHEN MAX(n.created_at) >= NOW() - INTERVAL 1 DAY THEN 2
+					ELSE 0
+					END
+					) DESC,
+					MAX(n.created_at) DESC
+					""",
+					nativeQuery = true
+			)
+	List<RecommendedNewsId> findTopPreferredNewsIds(
+			@Param("userId") Long userId,
+			@Param("limit") int limit
+			);
+	List<News> findTop10ByOrderByCreatedAtDesc();
 }
