@@ -94,11 +94,22 @@ public class NewsService {
 						));
 	}
 	
+	public Page<News> getLatestNewsPage(int page, int size) {
+	    Pageable pageable = PageRequest.of(
+	        page,
+	        size,
+	        Sort.by("createdAt").descending()
+	    );
+	    return newsRepository.findAll(pageable);
+	}
+
+	
 	public List<News> getTopPreferredNews(Long userId, int limit) {
 
 	    List<Long> ids =
 	        newsRepository.findTopPreferredNewsIds(userId, limit)
 	            .stream()
+	            .limit(limit)
 	            .map(RecommendedNewsId::getId)
 	            .collect(Collectors.toList());
 

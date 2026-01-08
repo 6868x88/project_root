@@ -33,7 +33,6 @@ ul {
 .news-grid {
 	display: grid;
 	gap: 20px;
-	grid-auto-rows: 360px;
 }
 
 .grid-3x2 {
@@ -68,7 +67,7 @@ ul {
 .news-image {
 	flex: 0 0 180px;
 	height: 180px;
-    min-height: 180px; 
+	min-height: 180px;
 	background: #eee;
 	overflow: hidden;
 }
@@ -77,8 +76,8 @@ ul {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-    display: block;
-    box-sizing: border-box;
+	display: block;
+	box-sizing: border-box;
 }
 
 .news-image img[src*="default.png"] {
@@ -128,12 +127,11 @@ ul {
 /* 로그인 상태 */
 .content-grid.logged-in {
 	grid-template-columns: 1fr 320px;
-	grid-template-rows: auto auto;
+	align-items: start;
 }
 
-
 .content-grid.logged-in .main-news {
-	grid-row: 1 / span 2;
+	grid-row: auto;
 }
 
 .content-grid.logged-in .favorite-grid {
@@ -154,18 +152,15 @@ ul {
 	grid-auto-rows: 360px;
 }
 
-.favorite-grid > li:only-child {
+.favorite-grid>li:only-child {
 	grid-row: span 2;
 	height: auto;
 }
-
 
 .news-card.small {
 	height: 360px;
 	background: #d1e4f6;
 }
-
-
 
 /* 헤더 */
 .site-header {
@@ -212,40 +207,46 @@ ul {
 	background: #ddd;
 }
 
-
 /* 로그인 모달 */
 .modal {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
+	position: fixed;
+	inset: 0;
+	z-index: 1000;
 }
 
 .modal.hidden {
-  display: none;
+	display: none;
 }
 
 .modal-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
-  position: relative;
-  width: 400px;
-  max-width: 90%;
-  margin: 10% auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
+	position: relative;
+	width: 400px;
+	max-width: 90%;
+	margin: 10% auto;
+	background: #fff;
+	padding: 20px;
+	border-radius: 8px;
 }
 
 .modal-close {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
+	position: absolute;
+	top: 10px;
+	right: 12px;
+	background: none;
+	border: none;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.score{
+  display: block;
+  width: 100%;
+  color:#aaa;
+  text-align: center;
 }

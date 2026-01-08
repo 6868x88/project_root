@@ -7,16 +7,14 @@
 			<h2 th:text="${news.title}"></h2>
 			<div>
 				<div>
-					<img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}"
-						alt="기사 이미지" />
-
-					<div th:if="${news.imageUrl == null}" class="image-placeholder">
-						이미지 없음</div>
+					<img
+						th:src="${(news.imageUrl != null and !#strings.isEmpty(news.imageUrl)) ? news.imageUrl : '/images/default.png'}"
+						th:onerror="|this.src='@{/images/default.png}';|" alt="news image" />
 				</div>
 			</div>
 
 			<div>
-				<div class="news-source" th:text="${news.source}">연합뉴스TV</div>
+				<div class="news-source" th:text="${news.source}"></div>
 				<div class="news-summary" th:text="${news.summary}">요약</div>
 			</div>
 

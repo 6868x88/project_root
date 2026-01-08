@@ -25,7 +25,9 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 					n.id,
 					n.title,
 					n.summary,
+					n.image_Url,
 
+					COALESCE(
 					(
 					COALESCE(SUM(
 					CASE
@@ -41,6 +43,7 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 					CASE
 					WHEN ua.action_type = 'CLICK' THEN 1
 					WHEN ua.action_type = 'LIKE'  THEN 3
+					ELSE 0
 					END
 					), 0)
 
@@ -50,6 +53,8 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 					WHEN n.created_at >= NOW() - INTERVAL 1 DAY THEN 2
 					ELSE 0
 					END
+					),
+					0
 					) AS total_score
 
 					FROM news n

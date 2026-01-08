@@ -1,29 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout}">
+<body>
 
 <div th:fragment="content">
+    <div class="content-grid single">
 
-	<h3>개인 추천 기사</h3>
+        <h3>내가 자주 보는 기사</h3>
 
-	<ul class="news-grid">
-		<li class="news-card" th:each="news : ${recommendations}"
-			th:onclick="|location.href='/news/${news.id}'|">
+        <ul class="news-grid grid-3x2">
+            <li class="news-card"
+                th:each="news : ${recommendations}"
+                 style="background-color:#d1e4f6;">
+                <a th:href="@{/news/{id}(id=${news.id})}"
+                   class="news-link">
 
-			<div class="news-image">
-				<img
-					th:src="${(news.imageUrl != null and !#strings.isEmpty(news.imageUrl)) ? news.imageUrl : '/images/default.png'}"
-					th:onerror="|this.src='@{/images/default.png}';|" alt="news image" />
-			</div>
+                    <div class="news-image">
+                        <img
+                            th:src="${(news.imageUrl != null and !#strings.isEmpty(news.imageUrl))
+                                     ? news.imageUrl
+                                     : '/images/default.png'}"
+                            th:onerror="|this.src='@{/images/default.png}';|" />
+                    </div>
 
+                    <div class="news-content">
+                        <h4 th:text="${news.title}"></h4>
+                        <p class="news-summary" th:text="${news.summary}"></p>
+                        <small class = "score" th:text="'선호도: ' + ${news.totalScore}"> </small>
+                    </div>
 
-			<div class="news-content">
-				<h4 th:text="${news.title}">제목</h4>
-				<p th:text="${news.summary}">요약</p>
-				<small th:text="'score: ' + ${news.totalScore}"></small>
-			</div>
+                </a>
+            </li>
+        </ul>
 
-		</li>
-	</ul>
-
+    </div>
 </div>
+
+</body>
 </html>

@@ -29,10 +29,12 @@ public class RecommendationService {
             Long id = ((Number) row[0]).longValue();
             String title = (String) row[1];
             String summary = (String) row[2];
-            Integer score = ((Number) row[3]).intValue();
+            String image_Url = (String) row[3];
+            Number scoreNum = (Number) row[4];
+            int score = scoreNum != null ? scoreNum.intValue() : 0;
 
             result.add(
-                new RecommendationNewsDto(id, title, summary, score)
+                new RecommendationNewsDto(id, title, summary, image_Url, score)
             );
         }
 

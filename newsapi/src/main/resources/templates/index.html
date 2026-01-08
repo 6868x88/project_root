@@ -12,8 +12,8 @@
 				<ul class="news-grid"
 					th:classappend="${user != null} ? 'grid-2x2' : 'grid-3x2'">
 
-					<li class="news-card" th:each="news : ${newsList}"><a
-						th:href="@{/news/{id}(id=${news.id})}" class="news-link">
+					<li class="news-card" th:each="news : ${newsList}">
+					<a th:href="@{/news/{id}(id=${news.id})}" class="news-link">
 
 							<div class="news-image">
 								<img
