@@ -1,27 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout}">
 <body>
+  <div th:fragment="content">
+    <article class="article">
 
-	<div th:fragment="content">
-		<article>
-			<h2 th:text="${news.title}"></h2>
-			<div>
-				<div>
-					<img
-						th:src="${(news.imageUrl != null and !#strings.isEmpty(news.imageUrl)) ? news.imageUrl : '/images/default.png'}"
-						th:onerror="|this.src='@{/images/default.png}';|" alt="news image" />
-				</div>
-			</div>
+      <h2 class="article-title" th:text="${news.title}"></h2>
 
-			<div>
-				<div class="news-source" th:text="${news.source}"></div>
-				<div class="news-summary" th:text="${news.summary}">요약</div>
-			</div>
+      <div class="article-media"
+  		   th:classappend="${news.imageUrl == null or #strings.isEmpty(news.imageUrl)} ? 'no-image' : 'has-image'">
+        <img class="article-image"
+             th:src="${(news.imageUrl != null and !#strings.isEmpty(news.imageUrl)) ? news.imageUrl : '/images/default.png'}"
+             th:onerror="|this.src='@{/images/default.png}';|"
+             alt="news image" />
+      </div>
 
-			<a th:href="${news.url}" target="_blank"> 원문 보기 </a> <a href="/"
-				class="back-link">목록으로</a>
-		</article>
-	</div>
+      <div class="article-meta">
+        <div class="news-summary" th:text="${news.summary}">요약</div>
+      </div>
+
+      <div class="article-actions">
+        <a class="btn btn-primary" th:href="${news.url}" target="_blank" rel="noopener noreferrer">
+          원문 링크
+        </a>
+        <a class="btn btn-ghost" th:href="${backUrl}">목록으로</a>
+      </div>
+
+    </article>
+  </div>
 </body>
-
 </html>

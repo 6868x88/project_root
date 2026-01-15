@@ -18,7 +18,7 @@
 				<a th:if="${user == null}" href="javascript:void(0)"
 					onclick="openLoginModal()">Login</a> <span th:if="${user != null}"
 					class="user-email" th:text="${user.email}"> </span> <a
-					th:if="${user != null}" href="/recommend">Recommend</a> <a
+					th:if="${user != null}" href="/recommend">favorite</a> <a
 					th:if="${user != null}" href="/logout">Logout</a>
 
 			</div>
@@ -29,6 +29,17 @@
 	<main class="container">
 		<div th:replace="~{::content}"></div>
 	</main>
+
+	<footer class="site-footer" role="contentinfo">
+		<div class="footer-inner">
+			<p class="footer-text">본 서비스에 표시되는 기사/이미지의 저작권은 각 언론사 및 콘텐츠 제공자에게
+				있으며, 본 서비스는 기사 링크 및 일부 정보(제목/요약 등)를 제공하는 목적입니다.</p>
+			<p class="footer-sub">
+				© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span>
+				news
+			</p>
+		</div>
+	</footer>
 
 
 	<div class="pagination" th:if="${totalPages != null}">

@@ -14,6 +14,7 @@ import com.example.newsapi.service.NewsService;
 import com.example.newsapi.service.RecommendationService;
 import com.example.newsapi.service.UserActionService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -88,29 +89,30 @@ public class PageController {
 	    return "recommend";
 	}
 	
+	
 	@GetMapping("/news/{id}")
-	public String newsDetail(
+	public String newsDetail1(
 	        @PathVariable Long id,
 	        Model model,
-	        HttpSession session
+	        HttpSession session,
+	        HttpServletRequest request
 	) {
 	    News news = newsService.getNewsById(id);
 
 	    User user = (User) session.getAttribute("user");
 	    if (user != null) {
-	        userActionService.save(
-	            user.getId(),
-	            news.getId(),
-	            ActionType.CLICK
-	        );
+	        userActionService.save(user.getId(), news.getId(), ActionType.CLICK);
 	    }
+
+	    String referer = request.getHeader("Referer");
+	    String backUrl = (referer != null && !referer.isBlank()) ? referer : "/";
 
 	    model.addAttribute("news", news);
 	    model.addAttribute("user", user);
+	    model.addAttribute("backUrl", backUrl);
 
 	    return "news";
 	}
-
 
 
 }
