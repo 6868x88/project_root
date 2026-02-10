@@ -26,6 +26,23 @@ def extract_image_url(soup):
         return img["src"].strip()
 
     return None
+
+# 기사 제목 추출 
+def extract_title(soup):
+    og = soup.select_one("meta[property='og:title']")
+    if og and og.get("content"):
+        return og["content"].strip()
+
+    tw = soup.select_one("meta[name='twitter:title']")
+    if tw and tw.get("content"):
+        return tw["content"].strip()
+
+    h1 = soup.select_one("h1")
+    if h1 and h1.get_text(strip=True):
+        return h1.get_text(strip=True)
+
+    return None
+
   
 
 # 사진/캡션 제거

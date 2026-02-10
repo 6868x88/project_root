@@ -2,7 +2,7 @@ import feedparser
 import requests
 from bs4 import BeautifulSoup
 
-from news_service import crawl_article, summarize_text, is_invalid_article, extract_image_url
+from news_service import crawl_article, summarize_text, is_invalid_article, extract_image_url, extract_title
 from send_to_spring import send_news_to_spring
 from datetime import datetime
 
@@ -32,13 +32,15 @@ def collect_news():
                 print("영상/비정상 기사 스킵:", url)
                 continue
 
+            page_title = extract_title(soup)
+
             news = {
-                "title": article["title"],
-                "url": url,
-                "content": article["text"],
-                "summary": summary,
-                "imageUrl": image_url
-            }
+                  "title": page_title or getattr(entry, "title", None) or article["title"],
+                  "url": url,
+                  "content": article["text"],
+                  "summary": summary,
+                  "imageUrl": image_url
+                    }
 
             news_list.append(news)
 

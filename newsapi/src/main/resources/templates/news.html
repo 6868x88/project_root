@@ -1,31 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout}">
 <body>
-  <div th:fragment="content">
-    <article class="article">
+	<div th:fragment="content">
+		<article class="article">
 
-      <h2 class="article-title" th:text="${news.title}"></h2>
+			<h2 class="article-title" th:text="${news.title}"></h2>
 
-      <div class="article-media"
-  		   th:classappend="${news.imageUrl == null or #strings.isEmpty(news.imageUrl)} ? 'no-image' : 'has-image'">
-        <img class="article-image"
-             th:src="${(news.imageUrl != null and !#strings.isEmpty(news.imageUrl)) ? news.imageUrl : '/images/default.png'}"
-             th:onerror="|this.src='@{/images/default.png}';|"
-             alt="news image" />
-      </div>
+			<div class="article-media"
+				th:classappend="${news.imageUrl == null or #strings.isEmpty(news.imageUrl)} ? 'no-image' : 'has-image'">
+				<img class="article-image"
+					th:src="${(news.imageUrl != null and !#strings.isEmpty(news.imageUrl)) ? news.imageUrl : '/images/default.png'}"
+					th:onerror="|this.src='@{/images/default.png}';|" alt="news image" />
+			</div>
 
-      <div class="article-meta">
-        <div class="news-summary" th:text="${news.summary}">요약</div>
-      </div>
+			<div class="article-meta">
+				<div class="news-summary" th:text="${news.summary}">요약</div>
+			</div>
 
-      <div class="article-actions">
-        <a class="btn btn-primary" th:href="${news.url}" target="_blank" rel="noopener noreferrer">
-          원문 링크
-        </a>
-        <a class="btn btn-ghost" th:href="${backUrl}">목록으로</a>
-      </div>
+			<div class="article-actions">
+				<a class="btn btn-primary" th:href="${news.url}" target="_blank"
+					rel="noopener noreferrer"> 원문 링크 </a> <a class="btn btn-ghost"
+					th:href="${backUrl}">목록으로</a>
 
-    </article>
-  </div>
+				<button th:if="${user != null}" type="button"
+					class="btn btn-fav btn-like"
+					th:classappend="${alreadyFavorited} ? ' is-favorited' : ''"
+					th:attr="data-news-id=${news.id}" th:disabled="${alreadyFavorited}">
+					<span th:text="${alreadyFavorited ? '★' : '☆'}">☆</span>
+				</button>
+			</div>
+		</article>
+		<script>
+document.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.btn-like');
+  if (!btn) return;
+
+  const newsId = btn.dataset.newsId;
+  const span = btn.querySelector('span');
+
+  const userId = document.body.dataset.userId;
+
+  const csrfToken = document.querySelector('meta[name="_csrf"]')?.content;
+  const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.content;
+
+  const headers = {
+    'Content-Type': 'application/json'
+  };
+  if (csrfToken && csrfHeader) headers[csrfHeader] = csrfToken;
+
+  const res = await fetch('/api/actions', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      userId: userId,
+      newsId: newsId,
+      actionType: 'LIKE'
+    })
+  });
+
+  if (!res.ok) {
+    alert('즐겨찾기 실패');
+    return;
+  }
+
+  span.textContent = '★';
+  btn.classList.add('is-favorited');
+  btn.disabled = true;
+});
+</script>
+
+	</div>
+
 </body>
+
 </html>

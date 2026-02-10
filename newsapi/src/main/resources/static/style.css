@@ -384,6 +384,22 @@ ul {
 
 .btn-ghost:hover { background: #e9ebee; }
 
+/* 즐겨찾기 */
+.btn-fav {
+  background: #FFD54F;
+  border: 1px solid #FFD54F;
+  color: #222;
+}
+
+.btn-fav:hover {
+  filter: brightness(0.95);
+}
+
+.btn-fav:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 
 /* 푸터 */
 .site-footer {
