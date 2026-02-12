@@ -142,7 +142,7 @@ public class PageController {
 
 	    User user = (User) session.getAttribute("user");
 	    if (user != null) {
-	        userActionService.save(user.getId(), news.getId(), ActionType.CLICK);
+	        userActionService.recordClick(user.getId(), news.getId());
 	    }
 	    
 	    boolean alreadyFavorited = false;

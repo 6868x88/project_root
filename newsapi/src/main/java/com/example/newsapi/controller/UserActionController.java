@@ -25,12 +25,12 @@ public class UserActionController {
 	public ResponseEntity<Void> save(
 			@RequestBody UserActionRequest request) {
 
-		service.save(
-				request.getUserId(),
-				request.getNewsId(),
-				request.getActionType()
-				);
-
+		service.recordAction(
+			    request.getUserId(),
+			    request.getNewsId(),
+			    request.getActionType()
+			);
+		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 }

@@ -16,9 +16,34 @@ public class UserActionService {
         this.repository = repository;
     }
 
-    public void save(Long userId, Long newsId, ActionType actionType) {
-        UserAction action = new UserAction(userId, newsId, actionType);
-        repository.save(action);
+    private void save(Long userId, Long newsId, ActionType actionType) {
+        repository.save(new UserAction(userId, newsId, actionType));
+    }
+    
+    public void recordClick(Long userId, Long newsId) {
+        save(userId, newsId, ActionType.CLICK);
+    }
+
+    public boolean recordLike(Long userId, Long newsId) {
+        boolean alreadyLiked =
+            repository.existsByUserIdAndNewsIdAndActionType(
+                userId, newsId, ActionType.LIKE
+            );
+
+        if (alreadyLiked) {
+            return false;
+        }
+
+        save(userId, newsId, ActionType.LIKE);
+        return true;
+    }
+    
+    public void recordAction(Long userId, Long newsId, ActionType actionType) {
+        if (actionType == ActionType.CLICK) {
+            save(userId, newsId, ActionType.CLICK);
+        } else if (actionType == ActionType.LIKE) {
+            save(userId, newsId, ActionType.LIKE);
+        }
     }
 
     @Transactional
