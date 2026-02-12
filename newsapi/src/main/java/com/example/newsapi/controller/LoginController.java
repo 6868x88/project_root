@@ -18,6 +18,20 @@ public class LoginController {
     public LoginController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    
+    @PostMapping("/signup")
+    public String signup(@RequestParam String email,
+                         HttpSession session) {
+
+        User user = userRepository.findByEmail(email).orElse(null);
+
+        if (user == null) {
+            user = new User(email);
+            userRepository.save(user);
+        }
+        session.setAttribute("user", user);
+        return "redirect:/";
+    }
 
     @GetMapping("/login")
     public String loginForm() {

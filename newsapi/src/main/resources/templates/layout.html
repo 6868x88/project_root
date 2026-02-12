@@ -16,9 +16,10 @@
 
 			<div class="header-right">
 				<a th:if="${user == null}" href="javascript:void(0)"
-					onclick="openLoginModal()">Login</a> <span th:if="${user != null}"
-					class="user-email" th:text="${user.email}"> </span> <a
-					th:if="${user != null}" href="/recommend">favorite</a> <a
+					onclick="openSignupModal()">Signup</a> <a th:if="${user == null}"
+					href="javascript:void(0)" onclick="openLoginModal()">Login</a> <span
+					th:if="${user != null}" class="user-email" th:text="${user.email}">
+				</span> <a th:if="${user != null}" href="/recommend">favorite</a> <a
 					th:if="${user != null}" href="/logout">Logout</a>
 
 			</div>
@@ -42,25 +43,20 @@
 	</footer>
 
 
-<div class="pagination" th:if="${totalPages != null}">
-  <!-- 이전 10개 구간 -->
-  <a th:if="${startPage > 0}"
-     th:href="@{__${pagePath}__(page=${startPage - 1})}"
-     class="page">«</a>
+	<div class="pagination" th:if="${totalPages != null}">
+		<!-- 이전 10개 구간 -->
+		<a th:if="${startPage > 0}"
+			th:href="@{__${pagePath}__(page=${startPage - 1})}" class="page">«</a>
 
-  <!-- 현재 구간 페이지들 -->
-  <a th:each="i : ${#numbers.sequence(startPage, endPage)}"
-     th:href="@{__${pagePath}__(page=${i})}"
-     th:text="${i + 1}"
-     class="page"
-     th:classappend="${i == currentPage} ? 'active'">
-  </a>
+		<!-- 현재 구간 페이지들 -->
+		<a th:each="i : ${#numbers.sequence(startPage, endPage)}"
+			th:href="@{__${pagePath}__(page=${i})}" th:text="${i + 1}"
+			class="page" th:classappend="${i == currentPage} ? 'active'"> </a>
 
-  <!-- 다음 10개 구간 -->
-  <a th:if="${endPage < totalPages - 1}"
-     th:href="@{__${pagePath}__(page=${endPage + 1})}"
-     class="page">»</a>
-</div>
+		<!-- 다음 10개 구간 -->
+		<a th:if="${endPage < totalPages - 1}"
+			th:href="@{__${pagePath}__(page=${endPage + 1})}" class="page">»</a>
+	</div>
 
 
 
@@ -74,16 +70,35 @@
 			<div th:replace="login :: content"></div>
 		</div>
 	</div>
+
+	<!-- 회원가입 모달 -->
+	<div id="signupModal" class="modal hidden">
+		<div class="modal-overlay" onclick="closeSignupModal()"></div>
+
+		<div class="modal-content">
+			<button class="modal-close" onclick="closeSignupModal()">×</button>
+			<div th:replace="signup :: content"></div>
+		</div>
+	</div>
+
 </body>
 
 <script>
-  function openLoginModal() {
-    document.getElementById("loginModal").classList.remove("hidden");
-  }
+	function openLoginModal() {
+		document.getElementById("loginModal").classList.remove("hidden");
+	}
 
-  function closeLoginModal() {
-    document.getElementById("loginModal").classList.add("hidden");
-  }
+	function closeLoginModal() {
+		document.getElementById("loginModal").classList.add("hidden");
+	}
+
+	function openSignupModal() {
+		document.getElementById("signupModal").classList.remove("hidden");
+	}
+
+	function closeSignupModal() {
+		document.getElementById("signupModal").classList.add("hidden");
+	}
 </script>
 
 </html>
