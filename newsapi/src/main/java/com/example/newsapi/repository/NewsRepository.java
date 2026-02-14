@@ -29,15 +29,6 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
 					COALESCE(
 					(
-					COALESCE(SUM(
-					CASE
-					WHEN n.title   LIKE CONCAT('%', ui.keyword, '%') THEN 3
-					WHEN n.summary LIKE CONCAT('%', ui.keyword, '%') THEN 2
-					ELSE 0
-					END
-					), 0)
-
-					+
 
 					COALESCE(SUM(
 					CASE
@@ -58,8 +49,6 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 					) AS total_score
 
 					FROM news n
-					LEFT JOIN user_interest ui
-					ON ui.user_id = :userId
 					LEFT JOIN user_actions ua
 					ON ua.user_id = :userId
 					AND ua.news_id = n.id
@@ -81,22 +70,12 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 			value = """
 					SELECT n.id AS id
 					FROM news n
-					LEFT JOIN user_interest ui
-					ON ui.user_id = :userId
 					LEFT JOIN user_actions ua
 					ON ua.user_id = :userId
 					AND ua.news_id = n.id
 					GROUP BY n.id
 					HAVING
 					(
-					COALESCE(SUM(
-					CASE
-					WHEN n.title   LIKE CONCAT('%', ui.keyword, '%') THEN 3
-					WHEN n.summary LIKE CONCAT('%', ui.keyword, '%') THEN 2
-					ELSE 0
-					END
-					), 0)
-					+
 					COALESCE(SUM(
 					CASE
 					WHEN ua.action_type = 'CLICK' THEN 1
@@ -111,14 +90,6 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 					) > 0
 					ORDER BY
 					(
-					COALESCE(SUM(
-					CASE
-					WHEN n.title   LIKE CONCAT('%', ui.keyword, '%') THEN 3
-					WHEN n.summary LIKE CONCAT('%', ui.keyword, '%') THEN 2
-					ELSE 0
-					END
-					), 0)
-					+
 					COALESCE(SUM(
 					CASE
 					WHEN ua.action_type = 'CLICK' THEN 1
