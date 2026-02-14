@@ -20,10 +20,7 @@ public class News {
     @Column(nullable = false, length = 1000)
     private String url;
 
-    @Column(length = 100)
-    private String source;
 
-    private LocalDateTime publishedAt;
     private LocalDateTime createdAt;
     
     @Column(name = "image_url", length = 500)
@@ -36,15 +33,12 @@ public class News {
     public News(String title,
     	    String summary,
     	    String url,
-    	    String source,
-    	    String imageUrl,
-    	    LocalDateTime publishedAt) {
+    	    String imageUrl
+    	    ) {
         this.title = title;
         this.summary = summary;
         this.url = url;
-        this.source = source;
         this.imageUrl = imageUrl;
-        this.publishedAt = publishedAt;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -53,8 +47,6 @@ public class News {
     public String getTitle() { return title; }
     public String getSummary() { return summary; }
     public String getUrl() { return url; }
-    public String getSource() { return source; }
     public String getImageUrl() { return imageUrl;}
-    public LocalDateTime getPublishedAt() { return publishedAt; }
     public LocalDateTime getCreatedAt() { return createdAt; }
 }

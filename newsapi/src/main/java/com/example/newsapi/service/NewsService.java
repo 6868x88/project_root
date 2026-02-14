@@ -40,9 +40,7 @@ public class NewsService {
 				request.getTitle(),
 				request.getSummary(),
 				request.getUrl(),
-				request.getSource(),
-				request.getImageUrl(),
-				request.getPublishedAt()
+				request.getImageUrl()
 				);
 
 
@@ -59,9 +57,7 @@ public class NewsService {
 						news.getTitle(),
 						news.getSummary(),
 						news.getUrl(),
-						news.getSource(),
-						news.getImageUrl(),
-						news.getPublishedAt()
+						news.getImageUrl()
 						))
 				.collect(Collectors.toList());
 	}
@@ -88,9 +84,7 @@ public class NewsService {
 						news.getTitle(),
 						news.getSummary(),
 						news.getUrl(),
-						news.getSource(),
-						news.getImageUrl(),
-						news.getPublishedAt()
+						news.getImageUrl()
 						));
 	}
 	
@@ -146,9 +140,7 @@ public class NewsService {
 						news.getTitle(),
 						news.getSummary(),
 						news.getUrl(),
-						news.getSource(),
-						news.getImageUrl(),
-						news.getPublishedAt()
+						news.getImageUrl()
 						));
 	}
 

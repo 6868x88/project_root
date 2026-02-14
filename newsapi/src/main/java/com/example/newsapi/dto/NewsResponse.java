@@ -9,7 +9,6 @@ public class NewsResponse {
 	private String url;
 	private String source;
 	private String imageUrl;
-	private LocalDateTime publishedAt;
 
 
 	public  NewsResponse(
@@ -17,17 +16,13 @@ public class NewsResponse {
 			String title,           
 			String summary,         
 			String url,           
-			String source,
-			String imageUrl,
-			LocalDateTime publishedAt
+			String imageUrl
 			) {
 		this.id = id;
 		this.title = title;
 		this.summary = summary;
 		this.url = url;
-		this.source = source;
 		this.imageUrl = imageUrl;
-		this.publishedAt = publishedAt;
 	}
 
 	public Long getId() {
@@ -50,16 +45,9 @@ public class NewsResponse {
 	}
 
 
-	public String getSource() {
-		return source;
-	}
-
 	public String getImageUrl() {
 	    return imageUrl;
 	}
 
 
-	public LocalDateTime getPublishedAt() {
-		return publishedAt;
-	}
 }
