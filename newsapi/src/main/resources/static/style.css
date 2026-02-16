@@ -207,7 +207,7 @@ ul {
 	background: #ddd;
 }
 
-/* 로그인 모달 */
+/* 로그인 모달 (+회원가입도 같이 적용) */
 .login-form {
   display: flex;
   flex-direction: column;

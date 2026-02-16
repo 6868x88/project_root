@@ -16,7 +16,8 @@
 
 			<div class="header-right">
 				<a th:if="${user == null}" href="javascript:void(0)"
-					onclick="openSignupModal()">Signup</a> <a th:if="${user == null}"
+					onclick="openSignupModal()">Signup</a> 
+					<a th:if="${user == null}"
 					href="javascript:void(0)" onclick="openLoginModal()">Login</a> <span
 					th:if="${user != null}" class="user-email" th:text="${user.email}">
 				</span> <a th:if="${user != null}" href="/recommend">favorite</a> <a
