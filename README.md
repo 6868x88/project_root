@@ -9,7 +9,8 @@ Python과 Java(Spring)를 연동하여 뉴스 기사를 수집·요약하고 API
 ```
 <br>
 👇 프로그램 개발 및 기능 설명은 아래 링크에서 확인하실 수 있습니다. 
-(pdf 링크)
+(pdf 링크)<br>
+(https://6868x88.github.io/project_root/RecoNews.pdf)
 
 ***
 
