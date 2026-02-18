@@ -2,6 +2,9 @@
 ## 📰 개인화 뉴스 요약 플랫폼
 
 <br>
+<img src = "https://github.com/user-attachments/assets/35a49ccb-be8e-4b69-97d7-30312e0c1829" width="90%" />
+<br>
+<br>
 
 ```
 Python과 Java(Spring)를 연동하여 뉴스 기사를 수집·요약하고 API 형태로 제공하는 개인화 뉴스 요약 플랫폼입니다. 
